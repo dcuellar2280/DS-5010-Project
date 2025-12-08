@@ -5,5 +5,4 @@
     David Cuellar
 """
 
-# Initialization script markign the repository as a Python package
-
+# Initialization script marking this repository as a Python package
