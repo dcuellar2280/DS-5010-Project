@@ -21,7 +21,7 @@ def prep_career_stats(career, stat):
     df = career.get_stat_season(stat)
     seasons = df["SEASON"].tolist()
     values = df[stat].tolist()
-
+    
     return (seasons, values)
 
 def prep_two_player_stats(season_stats, player1, player2):
@@ -50,6 +50,7 @@ def plot_career_stat_line(career, stat):
     """
     This function plots a line chart of a player's stat over all 
     the seasons they participated in their career
+    - Use CareerPlayerStats class for this function
     """
     seasons, values = prep_career_stats(career, stat)
 
@@ -86,6 +87,7 @@ def plot_two_player_bar(season_stats, player1, player2):
     """
     This function plots the side-by-side bar chart comparing 
     all available stats from two players from a single season
+    - Use SeasonPlayerStats class for this function
     """
     stats, values1, values2 = prep_two_player_stats(
         season_stats, player1, player2)

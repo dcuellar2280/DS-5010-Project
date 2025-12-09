@@ -10,10 +10,9 @@ import numpy as np
 
 class CareerPlayerStats:
     """
-    This class will standardize a single player's career stats over the course of 
-    their NBA career into a dataframe using the pandas and math package.
+    This class will standardize a single player's career per-game
+    stats into a dataframe using the pandas and math package.
     """
-
     # The standardized columns
     MY_COLUMNS = [
         "SEASON", "TEAM", "MP", "PTS", "AST", "REB", 
@@ -41,6 +40,10 @@ class CareerPlayerStats:
         """
         This method reads a CSV file for a single player's career
         and return a standardized CareerPlayerStats instance
+
+        Parameters: 1) cls (refers to class itself)
+                    2) path (string --> ex. "../lebron_careerplayerstats.csv")
+                    3) season_label (string --> ex. "LeBron James")
         """
         df = pd.read_csv(path)
         
@@ -50,8 +53,7 @@ class CareerPlayerStats:
             new_columns.append(str(column).upper())
         df.columns = new_columns
 
-        # Checking if aliases are found in df, and then renaming them
-        # to the standardized version
+        # Checking if aliases are found in df
         renamed_columns = []
         for column in df.columns:
             if column in cls.COLUMN_ALIASES:
@@ -98,6 +100,8 @@ class CareerPlayerStats:
         """
         This method returns a dataframe with the SEASON and stat columns
         for the given stat.
+
+        Parameter: 1) stat (string (ex. "PTS"))
         """
         if stat not in self.df.columns:
             raise ValueError(f"Stat: {stat}, not found")
@@ -140,6 +144,10 @@ class SeasonPlayerStats:
         This method reads a CSV file that has all active player's stats from
         the league for that specific season and returns a standardized 
         SeasonPlayerStats instance
+
+        Parameters: 1) cls (refers to class itself)
+                    2) path (string --> ex. "../seasonplayerstats_24-25.csv")
+                    3) season_label (string --> ex. "2024-25")
         """
         df = pd.read_csv(path)
         
@@ -203,15 +211,17 @@ class SeasonPlayerStats:
     def two_players_comp(self, player1, player2):
         """
         This method returns a new dataframe comparing two player's stats
+        
+        Parameters: 1) player1 (string / ex. "LeBron James")
+                    2) player2 (string / ex. "Steph Curry")
         """
         players = [player1, player2]
-
         # Checking that both players exist
         missing_players = []
         for name in players:
             if name not in self.df["PLAYER"].values:
                 missing_players.append(name)
-        if missing_players: # empty list will evaluate to false
+        if missing_players: # An empty list will evaluate to false!
             raise ValueError(f"A player wasn't found in this season data: {missing_players}")
 
         # Creating new dataframe comparing both players
@@ -223,3 +233,8 @@ class SeasonPlayerStats:
         This method returns a copy of the initialized dataframe
         """
         return self.df.copy()
+
+def main():
+    pass
+if __name__ == "__main__":
+    main()
