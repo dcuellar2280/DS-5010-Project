@@ -42,12 +42,44 @@ This module contains 2 helper functions and 2 plotting functions:
 
 ***Both visualzation functions use matplotlib***
 
+## Additional Notes:
+- CSV files must contain a "SEASON" column (career stats) or a "PLAYER" column (season stats)
+- Missing values are standardized using NaN
+
 ## Examples:
-
-'''python fig, ax = plot_career_stat_line(career, "PTS")
-
-'''python from dataset import CareerPlayerStats
+### **Loading a player's career stats**
+```
+from dataset import CareerPlayerStats
 
 career = CareerPlayerStats.from_csv("lebron_careerplayerstats.csv", "LeBron James")
 
-print(career.available_stats()) print(career.get_stat_season("PTS"))
+print(career.available_stats())
+print(career.get_stat_season("PTS"))
+```
+
+### **Loading a season's player stats and comparing two players**
+```
+from dataset import SeasonPlayerStats
+
+season = SeasonPlayerStats.from_csv("2024_25_season_playerstats.csv", "2024-25")
+
+comparison_df = season.two_players_comp("LeBron James", "Stephen Curry")
+print(comparison_df)
+```
+### **Visualizing the stat line trend**
+```
+from visualization import plot_career_stat_line
+import matplotlib.pyplot as plt
+
+fig, ax = plot_career_stat_line(career, "PTS")
+plt.show()
+```
+
+### **Visualizing a two-player comparison**
+```
+from visualization import plot_two_player_bar
+import matplotlib.pyplot as plt
+
+fig, ax = plot_two_player_bar(season, "LeBron James", "Stephen Curry")
+plt.show()
+```
